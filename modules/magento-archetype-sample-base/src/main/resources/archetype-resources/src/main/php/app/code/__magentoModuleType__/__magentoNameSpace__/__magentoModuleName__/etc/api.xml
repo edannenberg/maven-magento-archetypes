@@ -1,0 +1,47 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0"?>
+<!-- magento api configuration -->
+<config>
+	<api>
+		<resources>
+			<${magentoModuleNameLowerCase}_apiname translate="title" module="${magentoModuleNameLowerCase}">
+				<title>${magentoModuleName} Test API</title>
+				<model>${magentoModuleNameLowerCase}/api</model>
+				<acl>${magentoModuleNameLowerCase}_apiname</acl>
+				<methods>
+					<myMethodName translate="title" module="${magentoModuleNameLowerCase}">
+						<title>Says hi to this world</title>
+						<method>helloWorld</method>
+						<acl>${magentoModuleNameLowerCase}_apiname/myMethodName</acl>
+					</myMethodName>
+				</methods>
+				<faults module="${magentoModuleNameLowerCase}">
+					<myerror_code>
+						<code>101</code>
+						<message>Something went terribly wrong. :(</message>
+					</myerror_code>
+				</faults>
+			</${magentoModuleNameLowerCase}_apiname>
+		</resources>
+		<resources_alias>
+            <${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}_apiname</${magentoModuleNameLowerCase}_apiname>
+        </resources_alias>
+		<v2>
+            <resources_function_prefix>
+                <${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}Apiname</${magentoModuleNameLowerCase}_apiname>
+            </resources_function_prefix>
+        </v2>
+		<acl>
+			<resources>
+				 <${magentoModuleNameLowerCase}_apiname translate="title" module="${magentoModuleNameLowerCase}">
+                        <title>${magentoModuleName} Test API</title>
+                        <myMethodName translate="title" module="${magentoModuleNameLowerCase}">
+                            <title>My Api Action</title>
+                        </myMethodName>
+                    </${magentoModuleNameLowerCase}_apiname>
+			</resources>
+		</acl>
+	</api>
+</config>

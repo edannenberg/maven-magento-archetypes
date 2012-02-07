@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.bbe-consulting.maven.archetype</groupId>
+		<artifactId>magento-archetypes</artifactId>
+		<version>0.9.7</version>
+	</parent>
+
+	<groupId>de.bbe-consulting.maven.archetype</groupId>
+	<artifactId>magento-sample-module-archetype</artifactId>
+	<packaging>maven-archetype</packaging>
+
+	<name>Magento Sample Module Archetype</name>
+	<description>Ready-to-run Magento module with sample code.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.bbe-consulting.maven.archetype</groupId>
+			<artifactId>magento-archetype-base</artifactId>
+			<version>0.9.7</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.bbe-consulting.maven.archetype</groupId>
+			<artifactId>magento-archetype-sample-base</artifactId>
+			<version>0.4.2</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>de.bbe-consulting.maven.archetype</groupId>
+									<artifactId>magento-archetype-base</artifactId>
+									<version>0.9.7</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<excludes>META-INF/maven/archetype-metadata.xml</excludes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>de.bbe-consulting.maven.archetype</groupId>
+									<artifactId>magento-archetype-sample-base</artifactId>
+									<version>0.4.2</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>2.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+	</build>
+
+</project>

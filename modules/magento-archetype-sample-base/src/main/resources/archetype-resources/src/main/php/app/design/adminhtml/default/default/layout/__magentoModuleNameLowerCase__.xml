@@ -1,0 +1,24 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<layout>
+	<!-- modulename_adminthml_controller_action -->
+	<${magentoModuleNameLowerCase}_adminhtml_my_index>
+		<update handle="${magentoModuleNameLowerCase}_my_index"/>
+        <reference name="content">
+            <block type="${magentoModuleNameLowerCase}/adminhtml_myBlock" name="${magentoModuleNameLowerCase}_testblock" as="${magentoModuleNameLowerCase}_my_index" template="${magentoModuleNameLowerCase}/index.phtml">
+                <!-- some attach js/css examples -->
+                <!-- <action method="addJs"><script>${magentoModuleNameLowerCase}/myscript.js</script></action> 
+                <action method="addCss"><stylesheet>css/${magentoModuleNameLowerCase}.css</stylesheet></action>
+                <action method="addItem"><type>skin_css</type><name>css/styles-ie.css</name><params/><if>lt IE 8</if></action>
+                <action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
+                 -->
+            </block>
+        </reference>
+        <!-- include a css file from template folder, must end with .pthml tho --> 
+        <!-- <reference name="js">
+            <block type="adminhtml/template" template="${magentoModuleNameLowerCase}/css/mycss.phtml" name="${magentoModuleNameLowerCase}_css"></block>
+        </reference>
+         -->
+	</${magentoModuleNameLowerCase}_adminhtml_my_index>
+</layout>

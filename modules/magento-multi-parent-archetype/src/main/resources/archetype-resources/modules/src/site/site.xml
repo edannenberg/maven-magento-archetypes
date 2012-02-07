@@ -1,0 +1,39 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven" xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+ <skin>
+	<groupId>de.bbe-consulting.maven.skin</groupId>
+	<artifactId>maven-mavento-skin</artifactId>
+	<version>0.9.0</version>
+ </skin>
+  <!-- Use an image instead of the module name in the header.
+       Did a rather nasty hack in the mavento template to display 
+       the image as background instead as normal <img> if you use
+       "bg" as shown below in the alt tag. -->
+  <!-- <bannerLeft>
+    <name>mavento</name>
+    <src>/images/logos/mavento.jpg</src>
+    <alt>bg</alt>
+  </bannerLeft>
+  -->
+  
+  <body>
+    <links>
+      <item name="Mavento" href="http://mavento.bbe-consulting.de/"/>
+      <item name="PHP Maven" href="http://www.php-maven.org/"/>
+      <item name="Maven 2" href="http://maven.apache.org/maven2/"/>
+    </links>
+	
+	<menu ref="parent"/>
+	
+	<menu ref="modules"/>
+
+    <menu name="${artifactId} modules">
+      <item name="Overview" href="index.html"/>
+    </menu>
+    
+  </body>
+</project>

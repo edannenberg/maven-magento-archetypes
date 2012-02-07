@@ -1,0 +1,156 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0"?>
+<config>
+
+	<!-- define the module, version and dependencies -->
+    <modules>
+        <${magentoNameSpace}_${magentoModuleName}>
+            <version>${version}</version>
+            <!-- <depends>
+           	    <Mage_Adminhtml />
+            	<${magentoNameSpace}_MyModul2 />
+            </depends>  -->
+        </${magentoNameSpace}_${magentoModuleName}>
+    </modules>
+    
+    <global>
+		<!-- model configuration -->
+		<models>
+			<${magentoModuleNameLowerCase}>
+				<class>${magentoNameSpace}_${magentoModuleName}_Model</class>
+				<resourceModel>${magentoModuleNameLowerCase}_mysql4</resourceModel>
+			</${magentoModuleNameLowerCase}>
+			<${magentoModuleNameLowerCase}_mysql4>
+				<class>${magentoNameSpace}_${magentoModuleName}_Model_Mysql4</class>
+				<entities>
+					<myModel>
+						<table>${magentoModuleNameLowerCase}_mymodel</table>
+					</myModel>
+				</entities>
+			</${magentoModuleNameLowerCase}_mysql4>
+		</models>
+		
+		<!-- resource model configuration -->
+	    <resources>
+	    	<${magentoModuleNameLowerCase}_setup>
+	         	<setup>
+	            	<module>${magentoNameSpace}_${magentoModuleName}</module>
+	            	<class>${magentoNameSpace}_${magentoModuleName}_Model_Entity_Setup</class>
+	            </setup>
+	            <connection>
+	            	<use>core_setup</use>
+	            </connection>
+	        </${magentoModuleNameLowerCase}_setup>
+	        <${magentoModuleNameLowerCase}_write>
+	        	<connection>
+	            	<use>core_write</use>
+	            </connection>
+	        </${magentoModuleNameLowerCase}_write>
+	        <${magentoModuleNameLowerCase}_read>
+	        	<connection>
+	            	<use>core_read</use>
+	            </connection>
+	 		</${magentoModuleNameLowerCase}_read>
+		</resources>
+		
+		<!-- block path -->
+	   	<blocks>
+        	<${magentoModuleNameLowerCase}>
+        		<class>${magentoNameSpace}_${magentoModuleName}_Block</class>
+        	</${magentoModuleNameLowerCase}>        	
+        </blocks>
+        
+        <!-- helper classes -->
+        <helpers>
+            <${magentoModuleNameLowerCase}>
+                <class>${magentoNameSpace}_${magentoModuleName}_Helper</class>
+            </${magentoModuleNameLowerCase}>
+        </helpers>
+        
+    </global>
+    
+    <!-- backend routing -->
+    <admin>
+		<routers>
+			<${magentoModuleNameLowerCase}>
+				<use>admin</use>
+				<args>
+					<module>${magentoNameSpace}_${magentoModuleName}</module>
+					<frontName>${magentoModuleNameLowerCase}</frontName>
+				</args>
+			</${magentoModuleNameLowerCase}>
+		</routers>        
+    </admin>
+    
+    <adminhtml>
+        <!-- access control list, aka permissions  -->
+    	<acl>
+			<resources>
+				<!-- <all>
+					<title>Allow Everything</title>
+				</all> -->
+				<admin>
+					<children>
+						<${magentoModuleNameLowerCase} translate="title" module="${magentoModuleNameLowerCase}">
+							<title>${magentoModuleName} Module</title>
+							<children>
+								<actions translate="title">
+									<title>Actions</title>
+									<children>
+										<aclkey1 translate="title"><title>${magentoModuleName} Action 1</title></aclkey1>
+										<aclkey2 translate="title"><title>${magentoModuleName} Action 2</title></aclkey2>
+									</children>
+								</actions>
+							</children>
+							<sort_order>1</sort_order>
+						</${magentoModuleNameLowerCase}>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<!-- backend menu entries -->
+    	<menu>
+			<${magentoModuleNameLowerCase} module="${magentoModuleNameLowerCase}">
+				<title>${magentoModuleName} Menu</title>
+				<sort_order>100</sort_order>
+				<children>
+				 	<${magentoModuleNameLowerCase}_entry1 module="${magentoModuleNameLowerCase}">
+	                       <title>Menu Title</title>
+	                       <sort_order>1</sort_order>
+	                       <action>${magentoModuleNameLowerCase}/adminhtml_my</action>
+	                      </${magentoModuleNameLowerCase}_entry1>
+				</children>
+			</${magentoModuleNameLowerCase}>
+    	</menu>
+    	<!-- locale files -->
+    	<translate>
+            <modules>
+                <${magentoModuleNameLowerCase}>
+                    <files>
+                        <default>${magentoNameSpace}_${magentoModuleName}.csv</default>
+                    </files>
+                </${magentoModuleNameLowerCase}>
+            </modules>
+        </translate>
+        <!-- layout files -->
+        <layout>
+			<updates>
+				<${magentoModuleNameLowerCase}>
+					<file>${magentoModuleNameLowerCase}.xml</file>
+				</${magentoModuleNameLowerCase}>
+			</updates>
+		</layout>
+    </adminhtml>
+    <!-- crontab configuration -->
+    <!-- <crontab>
+      	<jobs>
+           	<${magentoModuleNameLowerCase}>
+               	<schedule><cron_expr>*/15 * * * *</cron_expr></schedule>
+               	<run><model>${magentoModuleNameLowerCase}/myModel::cronMethod</model></run>
+           	</${magentoModuleNameLowerCase}>
+       	</jobs>
+    </crontab>
+    -->
+</config>    

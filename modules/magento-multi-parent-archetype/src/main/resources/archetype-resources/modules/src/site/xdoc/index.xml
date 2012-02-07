@@ -1,0 +1,22 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<author email="erik.dannenberg@bbe-consulting.de">
+			Erik Dannenberg
+		</author>
+		<title></title>
+	</properties>
+	<meta name="keyword" content="maven, magento" />
+	<body>
+		<section name="${artifactId} Modules">
+			<subsection name="Overview">
+				<p>
+				Content modules page goes here..
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

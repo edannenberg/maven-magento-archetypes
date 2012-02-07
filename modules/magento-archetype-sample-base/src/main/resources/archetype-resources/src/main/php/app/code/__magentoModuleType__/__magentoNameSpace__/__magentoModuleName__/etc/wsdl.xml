@@ -1,0 +1,81 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+			<import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+			<!-- some complex type examples -->
+			<!-- 
+				<complexType name="myComplexType">
+					<all>
+						<element name="store_id" type="xsd:string" />
+						<element name="store_name" type="xsd:string" />
+						<element name="store_root_category_id" type="xsd:string" />
+					</all>
+				</complexType>
+				
+				<complexType name="ArrayOfComplexTypes">
+					<complexContent>
+						<restriction base="soapenc:Array">
+							<attribute ref="soapenc:arrayType" wsdl:arrayType="typens:myComplexType[]"/>
+						</restriction>
+					</complexContent>
+				</complexType>
+				
+				<complexType name="myComplexType2">
+					<all>
+						<element name="mysimple_type" type="xsd:string" />
+						<element name="mycomplex_types" type="typens:ArrayOfComplexTypes" />
+					</all>
+				</complexType>
+			 -->
+		</schema>
+	</types>
+
+	<!-- define req/response message signatures -->
+	<message name="${magentoModuleNameLowerCase}ApinameHelloWorldRequest">
+		<!-- the sessionId is mandatory for every request,
+			 your api method will be called without it tho -->
+		<part name="sessionId" type="xsd:string" />
+		<part name="name" type="xsd:string" />
+	</message>
+	<message name="${magentoModuleNameLowerCase}ApinameHelloWorldResponse">
+		<part name="greeting" type="xsd:string" />
+	</message>
+	
+	<!-- link port operations to req/response messages from above -->
+	<portType name="{{var wsdl.handler}}PortType">
+		<operation name="${magentoModuleNameLowerCase}ApinameMyMethodName">
+			<documentation>Says hi!</documentation>
+			<input message="typens:${magentoModuleNameLowerCase}ApinameHelloWorldRequest" />
+			<output message="typens:${magentoModuleNameLowerCase}ApinameHelloWorldResponse" />
+		</operation>
+	</portType>
+	
+	<!-- bind port operations to soap, rpc style -->
+	<binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="${magentoModuleNameLowerCase}ApinameMyMethodName">
+			<soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+			<input>
+				<soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+	</binding>
+
+	<!-- leave as is -->
+	<service name="{{var wsdl.name}}Service">
+		<port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+			<soap:address location="{{var wsdl.url}}" />
+		</port>
+	</service>
+
+</definitions>

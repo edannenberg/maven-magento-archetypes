@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+		
+	<parent>
+		<groupId>de.bbe-consulting.maven.archetype</groupId>
+		<artifactId>magento-archetype-parent</artifactId>
+		<version>0.9.7</version>
+	</parent>
+	
+	<groupId>de.bbe-consulting.maven.archetype</groupId>
+	<artifactId>magento-archetypes</artifactId>
+	<packaging>pom</packaging>
+	<name>Magento Archetypes</name>
+	
+	<modules>
+		<module>magento-archetype-base</module>
+		<module>magento-archetype-sample-base</module>
+		<module>magento-empty-module-archetype</module>
+		<module>magento-sample-module-archetype</module>
+		<module>magento-multi-parent-archetype</module>
+		<module>magento-empty-submodule-archetype</module>
+		<module>magento-sample-submodule-archetype</module>
+	</modules>
+	
+</project>

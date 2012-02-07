@@ -1,0 +1,17 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <${magentoNameSpace}_${magentoModuleName}>
+            <active>true</active>
+            <codePool>${magentoModuleType}</codePool>
+	        <!-- <depends>
+                <Mage_Adminhtml />
+                <Mage_Catalog />
+            </depends>
+            -->
+        </${magentoNameSpace}_${magentoModuleName}>
+    </modules>
+</config> 

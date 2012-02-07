@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.bbe-consulting.maven.archetype</groupId>
+	<artifactId>magento-archetype-parent</artifactId>
+	<version>0.9.7</version>
+	<packaging>pom</packaging>
+
+	<name>Magento Archetypes Parent Project</name>
+	<description>Holds Magento archetypes for the maven-magento-plugin</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+	  	<module>modules</module>
+<!--   		<module>site</module> -->
+	</modules>
+	
+	<distributionManagement>
+	  <!-- BBe Consulting Public Release Repository -->
+	  <repository>
+	    <id>bbe-public-releases</id>
+	    <name>BBe Public Releases</name>
+	    <url>http://maven.bbe-consulting.de/content/repositories/releases/</url>
+	  </repository>
+	  <!-- BBe Consulting Public Snapshot Repository -->
+	  <snapshotRepository>
+	    <id>bbe-public-snapshots</id>
+		<uniqueVersion>false</uniqueVersion>
+	    <name>BBe Public Snapshots</name>
+	    <url>http://maven.bbe-consulting.de/content/repositories/snapshots/</url>
+	  </snapshotRepository>
+	</distributionManagement>
+
+</project>

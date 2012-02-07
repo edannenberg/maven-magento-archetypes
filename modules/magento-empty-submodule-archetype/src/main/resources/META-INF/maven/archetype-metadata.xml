@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="mymodule"
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <requiredProperties>
+    <requiredProperty key="magentoModuleName"/>
+    <requiredProperty key="magentoModuleNameLowerCase"/>
+    <requiredProperty key="magentoNameSpace"/>
+    <requiredProperty key="magentoModuleType"/>
+  </requiredProperties>
+  <fileSets>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/main/assembly</directory>
+      <includes>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/main/php</directory>
+      <includes>
+        <include>**/*.php</include>
+        <include>**/*.csv</include>
+        <include>**/*.phtml</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/test</directory>
+      <includes>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/test/php</directory>
+      <includes>
+        <include>**/*.php</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/site</directory>
+      <includes>
+        <include>**/*.apt</include>
+        <include>**/*.config</include>
+        <include>**/*.fml</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>build.xml</include>
+        <include>license.header</include>
+      </includes>
+    </fileSet>
+    <!-- Magento folder setup -->
+    <fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/sql/mymodule_setup</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/Model/Mysql4</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/Model/Entity</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/Helper</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/etc</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/controllers/Adminhtml</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/code/local/Company/MyModule/Block/Adminhtml</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/design/adminhtml/default/default/template/mymodule</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/design/adminhtml/default/default/layout</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/etc/modules</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/main/php/app/locale/en_US</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/test/php/app/code/local/Company/MyModule/Model/Mysql4</directory>
+  	</fileSet>
+  	<fileSet encoding="UTF-8">
+  		<directory>src/test/php/app/code/local/Company/MyModule/controllers/Adminhtml</directory>
+    </fileSet>
+  </fileSets>
+</archetype-descriptor>

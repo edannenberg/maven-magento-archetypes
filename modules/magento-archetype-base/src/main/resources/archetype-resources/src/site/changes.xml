@@ -1,0 +1,26 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+    <properties>
+        <title>${magentoModuleName}</title>
+        <author email="erik.dannenberg@bbe-consulting.de">Erik Dannenberg</author>
+    </properties>
+    <body>
+        <release date="2011-11-11" version="1.0.0" description="First release.">
+            <action dev="edannenberg" type="update" >
+                Updated..
+            </action>
+            <action dev="edannenberg" type="add" >
+                Added..
+            </action>
+            <action dev="edannenberg" type="fix" due-to="Heinzi Floppel" due-to-email="heinzi@floppel.net" >
+                Fixed..
+            </action>
+        </release>
+
+    </body>
+</document>

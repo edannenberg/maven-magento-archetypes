@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>${groupId}</groupId>
@@ -18,74 +19,107 @@
 		<php.test.dependencies.target.dir>${php.dependencies.target.dir}</php.test.dependencies.target.dir>
 	</properties>
 
+	<!-- build lifecycle -->
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>de.bbe-consulting.maven.plugin</groupId>
 				<artifactId>magento-maven-plugin</artifactId>
 				<executions>
-		          <execution>
-		            <id>setup-magento-test</id>
-		            <phase>process-resources</phase>
-		            <goals>
-		              <goal>setup-test</goal>
-		            </goals>
-		          </execution>
-		        </executions>
-			</plugin>		
+					<execution>
+						<id>setup-magento-test</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>setup-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-magento-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>post-test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.phpmaven</groupId>
 				<artifactId>maven-php-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
-					<!-- true = log all php output -->
-					<logPhpOutput>true</logPhpOutput>
 					<!-- true = disable code validating -->
-					<ignoreValidate>${magento.test.ignore}</ignoreValidate>
+					<ignoreValidate>${ignoreValidate}</ignoreValidate>
 					<!-- true = disable all tests -->
-					<ignoreTests>${magento.test.ignore}</ignoreTests>
+					<skipTests>${skipTests}</skipTests>
 					<!-- some files simply won't validate, afaik it is only needed for mysql setup scripts and api classes -->
 					<excludeFromValidation>
-						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/Api/Resource.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/**/V2.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/**/Api.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
+						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
 					</excludeFromValidation>
-					<!-- pass php parameters here -->
-					<additionalPhpParameters>-d auto_prepend_file=magento_bootstrap.php</additionalPhpParameters>
+					<!-- only run the unit suite class -->
+					<testPostfix>Tests</testPostfix>
 				</configuration>
 			</plugin>
-		
+
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-phpunit</artifactId>
+				<configuration>
+					<executableConfig>
+						<!-- true = log all php output -->
+						<logPhpOutput>true</logPhpOutput>
+						<!-- set additional php parameters -->
+						<additionalPhpParameters>-d auto_prepend_file=magento_bootstrap.php</additionalPhpParameters>
+					</executableConfig>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-project</artifactId>
+				<configuration>
+					<dependenciesDir>${php.dependencies.target.dir}</dependenciesDir>
+					<testDependenciesDir>${php.dependencies.target.dir}</testDependenciesDir>
+				</configuration>
+			</plugin>
+
 			<!-- makes sure all source files have the same license, edit license.header to your needs -->
 			<plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <configuration>
-                    <header>${project.parent.parent.basedir}/license.header</header>
-                    <includes>
-                        <!-- php -->
-                        <include>**/*.php</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>format</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- extension assembly -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${project.parent.parent.basedir}/license.header</header>
+					<includes>
+						<!-- php -->
+						<include>**/*.php</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>format</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- use the new 3.0 site plugin, but with 2.x style configuration for compat. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<inherited>true</inherited>
+			</plugin>
+
+			<!-- extension assembly -->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -105,13 +139,39 @@
 					</execution>
 				</executions>
 			</plugin>
-	 	</plugins>
+			
+			<!-- only used to preserve evtl. symlinking of the build dir -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<excludeDefaultDirectories>true</excludeDefaultDirectories>
+					<filesets>
+						<fileset>
+							<directory>${project.build.directory}</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileset>
+						<!-- also clean project root (test instances)-->
+						<fileset>
+							<directory>${project.parent.parent.build.directory}</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+		<!-- needed by sonar -->
+		<sourceDirectory>${basedir}/src/main/php</sourceDirectory>
+		<testSourceDirectory>${basedir}/src/test/php</testSourceDirectory>
 	</build>
 
 	<reporting>
 		<plugins>
-		    <!-- unit test reports -->
-	       	<plugin>
+			<!-- unit test reports -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.10</version>
@@ -127,16 +187,10 @@
 			<plugin>
 				<groupId>org.phpmaven</groupId>
 				<artifactId>maven-php-plugin</artifactId>
-				<version>2.0-SNAPSHOT</version>
-				<configuration>
-   			        <phpPmdFilePath>/usr/bin/phpmd</phpPmdFilePath>
-   			        <phpDocFilePath>/usr/bin/phpdoc</phpDocFilePath>
-                </configuration>
+				<version>${php.maven.version}</version>
 				<reportSets>
 					<reportSet>
 						<reports>
-							<!-- phpmd is not ready yets, needs some xslt in the maven php plugin -->
-							<!-- <report>phpmd</report>  --> 
 							<report>phpdocumentor</report>
 						</reports>
 					</reportSet>

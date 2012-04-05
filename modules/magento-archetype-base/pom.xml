@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>de.bbe-consulting.maven.archetype</groupId>
 		<artifactId>magento-archetypes</artifactId>
-		<version>0.9.7</version>
+		<version>0.9.8</version>
 	</parent>
 
 	<groupId>de.bbe-consulting.maven.archetype</groupId>
 	<artifactId>magento-archetype-base</artifactId>
-	<version>0.9.7</version>
+	<version>0.9.8</version>
 	<packaging>jar</packaging>
 
 	<name>Magento Archetype Base</name>

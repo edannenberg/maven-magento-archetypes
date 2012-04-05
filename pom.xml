@@ -5,7 +5,7 @@
 
 	<groupId>de.bbe-consulting.maven.archetype</groupId>
 	<artifactId>magento-archetype-parent</artifactId>
-	<version>0.9.7</version>
+	<version>0.9.8</version>
 	<packaging>pom</packaging>
 
 	<name>Magento Archetypes Parent Project</name>
@@ -16,24 +16,24 @@
 	</properties>
 
 	<modules>
-	  	<module>modules</module>
-<!--   		<module>site</module> -->
+		<module>modules</module>
+<!--	<module>site</module> -->
 	</modules>
-	
+
 	<distributionManagement>
-	  <!-- BBe Consulting Public Release Repository -->
-	  <repository>
-	    <id>bbe-public-releases</id>
-	    <name>BBe Public Releases</name>
-	    <url>http://maven.bbe-consulting.de/content/repositories/releases/</url>
-	  </repository>
-	  <!-- BBe Consulting Public Snapshot Repository -->
-	  <snapshotRepository>
-	    <id>bbe-public-snapshots</id>
-		<uniqueVersion>false</uniqueVersion>
-	    <name>BBe Public Snapshots</name>
-	    <url>http://maven.bbe-consulting.de/content/repositories/snapshots/</url>
-	  </snapshotRepository>
+		<!-- BBe Consulting Public Release Repository -->
+		<repository>
+			<id>bbe-public-releases</id>
+			<name>BBe Public Releases</name>
+			<url>http://maven.bbe-consulting.de/content/repositories/releases/</url>
+		</repository>
+		<!-- BBe Consulting Public Snapshot Repository -->
+		<snapshotRepository>
+			<id>bbe-public-snapshots</id>
+			<uniqueVersion>false</uniqueVersion>
+			<name>BBe Public Snapshots</name>
+			<url>http://maven.bbe-consulting.de/content/repositories/snapshots/</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 </project>

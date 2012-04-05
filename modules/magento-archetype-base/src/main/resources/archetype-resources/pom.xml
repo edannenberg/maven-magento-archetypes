@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>${groupId}</groupId>
@@ -10,9 +11,9 @@
 	<name>${magentoModuleName} Module</name>
 	<url>http://your.project.url</url>
 	<description>${magentoModuleName} does alot of nice things..</description>
-	<inceptionYear>2011</inceptionYear>
+	<inceptionYear>2012</inceptionYear>
 
-	<!-- profile properties -->
+	<!-- profile -->
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -21,37 +22,28 @@
 			</activation>
 			<properties>
 				<!-- magento settings dev profile, default -->
-				<magento.version>1.6.1.0</magento.version>
-
 				<magento.root.local>/home/data/www/${artifactId}</magento.root.local>
-				<magento.url.base>http://127.0.0.1/${artifactId}</magento.url.base>
-				
-				<magento.db.name>db_magento_${artifactId}</magento.db.name>
-				<magento.db.user>magento</magento.db.user>
-				<magento.db.passwd>123test</magento.db.passwd>
 
+				<magento.db.name>magento_${artifactId}</magento.db.name>
+				<magento.db.user>root</magento.db.user>
+				<!-- <magento.db.passwd>123pw</magento.db.passwd> -->
+				<!-- only needed if mysql does not run on standard port -->
+				<!-- <magento.db.host>127.0.0.1</magento.db.host> -->
+				<!-- <magento.db.port>3333</magento.db.port> -->
+				
+				<!-- if your dev box does not support https -->
+				<!-- <magento.use.https.frontend>false</magento.use.https.frontend> -->
+				<!-- <magento.use.https.backend>false</magento.use.https.backend> -->
+				
 				<magento.admin.username>admin</magento.admin.username>
 				<magento.admin.passwd>123test</magento.admin.passwd>
-				
+
 				<!-- want magento product sample data? -->
 				<magento.use.sample.data>true</magento.use.sample.data>
-				
-				<!-- set some/config/key with some value in core_config_data -->
-				<magento.config.some.config.key>some value</magento.config.some.config.key>
-				<!-- set the same config key with scope = websites and scope_id = 1 -->
-				<magento.config.some.config.key--websites--1>another value</magento.config.some.config.key--websites--1>
-				
-				<!-- install extensions from magento connect after setup, append extension version if needed   -->
-				<magento.extensions.community>Locale_Mage_community_de_DE,CashOnDelivery-1.0.2</magento.extensions.community>
-				
+
 				<!-- integration tests -->
-				<magento.test.ignore>false</magento.test.ignore>
-				<magento.test.root.link>/home/data/www/${artifactId}_it</magento.test.root.link>
-				<magento.test.url.base>http://127.0.0.1/${artifactId}_it</magento.test.url.base>
-				
-				<magento.test.db.name>db_magento_${artifactId}_it</magento.test.db.name>
-				<magento.test.db.user>magento_it</magento.test.db.user>
-				<magento.test.db.passwd>123test</magento.test.db.passwd>
+				<skipTests>false</skipTests>
+				<ignoreValidate>false</ignoreValidate>
 			</properties>
 		</profile>
 
@@ -61,12 +53,13 @@
 			</activation>
 			<properties>
 				<!-- magento settings production profile -->
-				<magento.root.local>/home/data/www/${artifactId}</magento.root.local>
-				<magento.url.base>http://127.0.0.1/${artifactId}</magento.url.base>
-				<magento.url.base.https>https://127.0.0.1/${artifactId}</magento.url.base.https>
-				
-				<!-- you prolly don't want those here, put them in your ~/.m2/settings.xml instead -->
-				<magento.db.name>db_magento</magento.db.name>
+				<magento.root.local>/home/data/www/${artifactId}_live</magento.root.local>
+				<magento.url.base>http://127.0.0.1/${artifactId}_live</magento.url.base>
+				<magento.url.base.https>https://127.0.0.1/${artifactId}_live</magento.url.base.https>
+
+				<!-- you prolly don't want live server credentials here, put them in your 
+					~/.m2/settings.xml instead -->
+				<magento.db.name>magento_${artifactId}_live</magento.db.name>
 				<magento.db.user>magento</magento.db.user>
 				<magento.db.passwd>123test</magento.db.passwd>
 
@@ -84,52 +77,93 @@
 				<magento.cache.eav>true</magento.cache.eav>
 				<magento.cache.layout>true</magento.cache.layout>
 				<magento.cache.translate>true</magento.cache.translate>
-				
-				<!-- disable code validation and all tests -->
-				<magento.test.ignore>true</magento.test.ignore>
+
 			</properties>
 		</profile>
-		
+
+		<!-- profile to setup a minimal magento instance with the db repair tool installed -->
+		<profile>
+			<id>db-repair-tool</id>
+			<properties>
+				<magento.root.local>/home/data/www/${artifactId}_repair</magento.root.local>
+
+				<magento.db.name>magento_${artifactId}_dbrepair</magento.db.name>
+				<magento.db.user>root</magento.db.user>
+				<magento.db.host>127.0.0.1</magento.db.host>
+				<magento.db.port>3333</magento.db.port>
+	
+				<magento.admin.username>admin</magento.admin.username>
+				<magento.admin.passwd>123test</magento.admin.passwd>
+				<magento.use.sample.data>false</magento.use.sample.data>
+				<magento.pear.enabled>false</magento.pear.enabled>
+			</properties>
+			<!-- minimal dependencies set for db repair tool -->
+			<dependencies>
+				<dependency>
+					<groupId>${magento.test.artifact.group.id}</groupId>
+					<artifactId>${magento.test.artifact.id}</artifactId>
+					<version>${magento.test.artifact.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>com.varien</groupId>
+					<artifactId>magento-db-repair-tool</artifactId>
+					<version>1.0</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
 	</profiles>
 
 	<!-- general properties, active in all profiles -->
 	<properties>
 		<!-- magento settings -->
-		<magento.version>1.6.1.0</magento.version>
+		<magento.version>1.6.2.0</magento.version>
 		<!-- <magento.locale>de_DE</magento.locale> -->
 		<!-- <magento.extensions.community>Locale_Mage_community_de_DE,CashOnDelivery</magento.extensions.community> -->
-		<magento.db.reindex>true</magento.db.reindex>
+		<magento.db.reindex>false</magento.db.reindex>
+		
+		<!-- set some/config/key with some value in core_config_data -->
+		<magento.config.some.config.key>some value</magento.config.some.config.key>
+		<!-- set the same config key with scope = websites and scope_id = 1 -->
+		<magento.config.some.config.key--websites--1>another value</magento.config.some.config.key--websites--1>
 
 		<!-- general build settings -->
-		<!-- you don't want to delete this ;) -->
-		
+
 		<!-- sonar setup -->
 		<sonar.language>php</sonar.language>
 		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
-	    <sonar.phpcpd.skip>false</sonar.phpcpd.skip>
-	    <sonar.phpCodesniffer.skip>false</sonar.phpCodesniffer.skip>
-	    <sonar.phpDepend.skip>false</sonar.phpDepend.skip>
-	    <sonar.phpUnit.coverage.skip>false</sonar.phpUnit.coverage.skip>
-	    <sonar.phpUnit.skip>false</sonar.phpUnit.skip>
-	    <sonar.phpUnit.bootstrap>magento_bootstrap.php</sonar.phpUnit.bootstrap>
+		<sonar.phpcpd.skip>false</sonar.phpcpd.skip>
+		<sonar.phpCodesniffer.skip>false</sonar.phpCodesniffer.skip>
+		<sonar.phpDepend.skip>false</sonar.phpDepend.skip>
+		<sonar.phpUnit.coverage.skip>false</sonar.phpUnit.coverage.skip>
+		<sonar.phpUnit.skip>false</sonar.phpUnit.skip>
+		<sonar.phpUnit.bootstrap>magento_bootstrap.php</sonar.phpUnit.bootstrap>
 		<sonar.phpUnit.argumentLine>-d memory_limit=512M -d include_path="${php.dependencies.target.dir}"</sonar.phpUnit.argumentLine>
-	    <sonar.phpUnit.analyze.test.directory>true</sonar.phpUnit.analyze.test.directory>
-<!-- 	    <sonar.phpUnit.mainTestClass></sonar.phpUnit.mainTestClass> -->
-		
-		<!-- magento artifact for magento:setup  -->
+		<sonar.phpUnit.analyze.test.directory>true</sonar.phpUnit.analyze.test.directory>
+		<!-- <sonar.phpUnit.mainTestClass></sonar.phpUnit.mainTestClass> -->
+
+		<!-- you don't want to delete this ;) -->
+
+		<!-- magento artifact for magento:setup -->
 		<magento.artifact.group.id>com.varien</magento.artifact.group.id>
 		<magento.artifact.id>magento</magento.artifact.id>
 		<magento.artifact.version>${magento.version}</magento.artifact.version>
-		<!-- magento artifact for integration tests  -->
+		<!-- magento artifact for validate/integration tests -->
 		<magento.test.artifact.group.id>${magento.artifact.group.id}</magento.test.artifact.group.id>
 		<magento.test.artifact.id>${magento.artifact.id}</magento.test.artifact.id>
 		<magento.test.artifact.version>${magento.artifact.version}</magento.test.artifact.version>
-		
+
 		<!-- don't change these unless you know what you are doing -->
 		<magento.build.directory>${project.build.directory}</magento.build.directory>
 		<php.dependencies.target.dir>${magento.build.directory}/${magento.test.artifact.group.id}-${magento.test.artifact.id}-${magento.test.artifact.version}</php.dependencies.target.dir>
 		<php.test.dependencies.target.dir>${php.dependencies.target.dir}</php.test.dependencies.target.dir>
+		<skipTests>false</skipTests>
+		<ignoreValidate>false</ignoreValidate>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<php.maven.version>2.0.0-RC1</php.maven.version>
+		<php.mavento.version>0.9.8</php.mavento.version>
+		<php.phpunit.version>3.6.10</php.phpunit.version>
 	</properties>
 
 	<!-- team information -->
@@ -185,26 +219,28 @@
 	<!-- project dependencies -->
 	<dependencies>
 		<dependency>
-			<groupId>${magento.artifact.group.id}</groupId>
-			<artifactId>${magento.artifact.id}</artifactId>
-			<version>${magento.artifact.version}</version>
+			<groupId>${magento.test.artifact.group.id}</groupId>
+			<artifactId>${magento.test.artifact.id}</artifactId>
+			<version>${magento.test.artifact.version}</version>
 		</dependency>
-		<!-- pull in mage.bat for windows compatibility, you can safely remove this on other systems -->		
+		<!-- pull in mage.bat for windows pear compatibility, you can safely remove 
+			this on other systems -->
 		<dependency>
 			<groupId>com.chilipepperdesign</groupId>
 			<artifactId>mage-bat</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>nl.ibuildings</groupId>
-			<artifactId>mage-test</artifactId>
-			<version>0.1.3</version>
+			<groupId>org.ecomdev</groupId>
+			<artifactId>ecomdev-phpunit</artifactId>
+			<version>0.2.0-dev</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.phpunit</groupId>
-			<artifactId>phpunit5</artifactId>
-			<version>3.5.5</version>
+			<groupId>de.phpunit</groupId>
+			<artifactId>PHPUnit</artifactId>
+			<version>${php.phpunit.version}</version>
+			<type>phar</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -215,76 +251,95 @@
 			<plugin>
 				<groupId>de.bbe-consulting.maven.plugin</groupId>
 				<artifactId>magento-maven-plugin</artifactId>
-				<version>0.9.7</version>
+				<version>${php.mavento.version}</version>
 				<executions>
-		          <execution>
-		            <id>setup-magento-test</id>
-		            <phase>process-resources</phase>
-		            <goals>
-		              <goal>setup-test</goal>
-		            </goals>
-		          </execution>
-		        </executions>
+					<execution>
+						<id>setup-magento-test</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>setup-test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.phpmaven</groupId>
 				<artifactId>maven-php-plugin</artifactId>
 				<extensions>true</extensions>
-				<version>2.0-SNAPSHOT</version>
+				<version>${php.maven.version}</version>
 				<configuration>
-					<!-- true = log all php output -->
-					<logPhpOutput>true</logPhpOutput>
 					<!-- true = disable code validating -->
-					<ignoreValidate>${magento.test.ignore}</ignoreValidate>
+					<ignoreValidate>${ignoreValidate}</ignoreValidate>
 					<!-- true = disable all tests -->
-					<ignoreTests>${magento.test.ignore}</ignoreTests>
+					<skipTests>${skipTests}</skipTests>
 					<!-- some files simply won't validate, afaik it is only needed for mysql setup scripts and api classes -->
 					<excludeFromValidation>
-						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/Api/Resource.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/**/V2.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/Model/**/Api.php</param>
-	  					<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
+						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
 					</excludeFromValidation>
-					<!-- pass php parameters here -->
-					<additionalPhpParameters>-d auto_prepend_file=magento_bootstrap.php</additionalPhpParameters>
+					<!-- only run the unit suite class -->
+					<testPostfix>Tests</testPostfix>
 				</configuration>
 			</plugin>
-			
+
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-phpunit</artifactId>
+				<version>${php.maven.version}</version>
+				<configuration>
+					<executableConfig>
+						<!-- true = log all php output -->
+						<logPhpOutput>true</logPhpOutput>
+						<!-- set additional php parameters -->
+						<additionalPhpParameters>-d auto_prepend_file=magento_bootstrap.php</additionalPhpParameters>
+					</executableConfig>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-project</artifactId>
+				<version>${php.maven.version}</version>
+				<configuration>
+					<dependenciesDir>${php.dependencies.target.dir}</dependenciesDir>
+					<testDependenciesDir>${php.dependencies.target.dir}</testDependenciesDir>
+				</configuration>
+			</plugin>
+
 			<!-- makes sure all source files have the same license, edit license.header to your needs -->
 			<plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <version>1.5.1</version>
-                <configuration>
-                    <header>license.header</header>
-                    <includes>
-                        <!-- php -->
-                        <include>**/*.php</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>format</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-			
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.5.1</version>
+				<configuration>
+					<header>license.header</header>
+					<includes>
+						<!-- php -->
+						<include>**/*.php</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>format</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- use the new 3.0 site plugin, but with 2.x style configuration for compat. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-site-plugin</artifactId>
+				<artifactId>maven-site-plugin</artifactId>
 				<version>3.0</version>
 				<inherited>true</inherited>
 			</plugin>
@@ -310,56 +365,69 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- only used to preserve evtl. symlinking of the build dir -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<excludeDefaultDirectories>true</excludeDefaultDirectories>
+					<filesets>
+						<fileset>
+							<directory>${project.build.directory}</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 		</plugins>
-		
 		<!-- needed by sonar -->
 		<sourceDirectory>${basedir}/src/main/php</sourceDirectory>
-    	<testSourceDirectory>${basedir}/src/test/php</testSourceDirectory>
+		<testSourceDirectory>${basedir}/src/test/php</testSourceDirectory>
 	</build>
 
 	<!-- site lifecycle -->
 	<reporting>
 		<plugins>
-		<!-- general project info -->
+			<!-- general project info -->
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-project-info-reports-plugin</artifactId>
-		        <version>2.4</version>
-		        <reportSets>
-		          <reportSet>
-		            <reports>
-		              <report>project-team</report>
-		              <report>issue-tracking</report>
-		              <report>scm</report>
-		              <report>cim</report>
-		            </reports>
-		          </reportSet>
-		        </reportSets>
-	        </plugin>
-	       	<!-- automatic changelog via your scm, defunc atm due to classloader problems -->
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>changelog-maven-plugin</artifactId>
-				<version>2.0-beta-1</version>
-			</plugin>  --> 
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.4</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>project-team</report>
+							<report>issue-tracking</report>
+							<report>scm</report>
+							<report>cim</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- automatic changelog via your scm, defunc atm due to classloader problems -->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>changelog-maven-plugin</artifactId> 
+				<version>2.0-beta-1</version> </plugin> -->
 			<!-- manual changelog via site/changes.xml -->
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-changes-plugin</artifactId>
-		        <version>2.6</version>
-		        <configuration>
-		          <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
-		        </configuration>
-		        <reportSets>
-		          <reportSet>
-		            <reports>
-		              <report>changes-report</report>
-		            </reports>
-		          </reportSet>
-		        </reportSets>
-		    </plugin>
-		    <!-- unit test reports -->
-	       	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<xmlPath>${basedir}/src/site/changes.xml</xmlPath>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- unit test reports -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.10</version>
@@ -375,16 +443,10 @@
 			<plugin>
 				<groupId>org.phpmaven</groupId>
 				<artifactId>maven-php-plugin</artifactId>
-				<version>2.0-SNAPSHOT</version>
-				<configuration>
-   			        <phpPmdFilePath>/usr/bin/phpmd</phpPmdFilePath>
-   			        <phpDocFilePath>/usr/bin/phpdoc</phpDocFilePath>
-                </configuration>
+				<version>${php.maven.version}</version>
 				<reportSets>
 					<reportSet>
 						<reports>
-							<!-- phpmd is not ready yets, needs some xslt in the maven php plugin -->
-							<!-- <report>phpmd</report>  --> 
 							<report>phpdocumentor</report>
 						</reports>
 					</reportSet>
@@ -397,57 +459,40 @@
 				<version>2.4</version>
 				<configuration>
 					<tagListOptions>
-			            <tagClasses>
-			              <tagClass>
-			                <displayName>Todo Work</displayName>
-			                <tags>
-			                  <tag>
-			                    <matchString>todo</matchString>
-			                    <matchType>ignoreCase</matchType>
-			                  </tag>
-			                  <tag>
-			                    <matchString>FIXME</matchString>
-			                    <matchType>exact</matchType>
-			                  </tag>
-			                </tags>
-			              </tagClass>
-			            </tagClasses>
-				  	</tagListOptions>
-	              </configuration>
+						<tagClasses>
+							<tagClass>
+								<displayName>Todo Work</displayName>
+								<tags>
+									<tag>
+										<matchString>todo</matchString>
+										<matchType>ignoreCase</matchType>
+									</tag>
+									<tag>
+										<matchString>FIXME</matchString>
+										<matchType>exact</matchType>
+									</tag>
+								</tags>
+							</tagClass>
+						</tagClasses>
+					</tagListOptions>
+				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
 
 	<!-- repository list if you want to add your own -->
-<!-- <repositories>
-		<repository>
-			<id>releases</id>
-			<name>MyCompany Release Repository</name>
-			<url>http://maven.my-company.de/content/repositories/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>snapshots</id>
-			<name>MyCompany Snapshot Repository</name>
-			<url>http://maven.my-company.de/content/repositories/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
--->
+	<!-- <repositories> <repository> <id>releases</id> <name>MyCompany Release 
+		Repository</name> <url>http://maven.my-company.de/content/repositories/releases</url> 
+		<releases> <enabled>true</enabled> </releases> </repository> <repository> 
+		<id>snapshots</id> <name>MyCompany Snapshot Repository</name> <url>http://maven.my-company.de/content/repositories/snapshots</url> 
+		<releases> <enabled>false</enabled> </releases> <snapshots> <enabled>true</enabled> 
+		</snapshots> </repository> </repositories> -->
 
-	<!-- deployment for site and/or build artifacts, put credentials in 
-		 ~/.m2/settings.xml -->
+	<!-- deployment for site and/or build artifacts, put credentials in ~/.m2/settings.xml -->
 	<distributionManagement>
 		<site>
 			<id>web-site</id>
-			<!-- <url>scp://www.your.project.url/docs/${magentoModuleName}</url>  -->
+			<!-- <url>scp://www.your.project.url/docs/${magentoModuleName}</url> -->
 			<url>file:///home/data/www/${magentoModuleNameLowerCase}-site</url>
 		</site>
 	</distributionManagement>

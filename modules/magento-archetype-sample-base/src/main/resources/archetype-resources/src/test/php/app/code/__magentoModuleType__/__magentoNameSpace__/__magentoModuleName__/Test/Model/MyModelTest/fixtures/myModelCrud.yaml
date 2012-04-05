@@ -1,0 +1,11 @@
+tables:
+ ${magentoModuleNameLowerCase}/myModel:
+  - entity_id: 1
+    text_field: test_string
+    float_field: 6.04
+    boolean_field: 1
+  - entity_id: 2
+    text_field: test_string12
+    float_field: 6.07
+    boolean_field: 0
+

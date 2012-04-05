@@ -26,21 +26,22 @@
 			</${magentoModuleNameLowerCase}_apiname>
 		</resources>
 		<resources_alias>
-            <${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}_apiname</${magentoModuleNameLowerCase}_apiname>
-        </resources_alias>
+			<${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}_apiname</${magentoModuleNameLowerCase}_apiname>
+		</resources_alias>
 		<v2>
-            <resources_function_prefix>
-                <${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}Apiname</${magentoModuleNameLowerCase}_apiname>
-            </resources_function_prefix>
-        </v2>
+			<resources_function_prefix>
+				<${magentoModuleNameLowerCase}_apiname>${magentoModuleNameLowerCase}Apiname</${magentoModuleNameLowerCase}_apiname>
+			</resources_function_prefix>
+		</v2>
 		<acl>
 			<resources>
-				 <${magentoModuleNameLowerCase}_apiname translate="title" module="${magentoModuleNameLowerCase}">
-                        <title>${magentoModuleName} Test API</title>
-                        <myMethodName translate="title" module="${magentoModuleNameLowerCase}">
-                            <title>My Api Action</title>
-                        </myMethodName>
-                    </${magentoModuleNameLowerCase}_apiname>
+				<${magentoModuleNameLowerCase}_apiname translate="title"
+				module="${magentoModuleNameLowerCase}">
+				<title>${magentoModuleName} Test API</title>
+				<myMethodName translate="title" module="${magentoModuleNameLowerCase}">
+					<title>My Api Action</title>
+				</myMethodName>
+				</${magentoModuleNameLowerCase}_apiname>
 			</resources>
 		</acl>
 	</api>

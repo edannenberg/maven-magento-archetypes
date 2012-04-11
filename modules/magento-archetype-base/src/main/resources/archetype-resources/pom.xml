@@ -31,7 +31,7 @@
 				<!-- <magento.db.host>127.0.0.1</magento.db.host> -->
 				<!-- <magento.db.port>3333</magento.db.port> -->
 				
-				<!-- if your dev box does not support https -->
+				<!-- use https for backend/frontend? -->
 				<!-- <magento.use.https.frontend>false</magento.use.https.frontend> -->
 				<!-- <magento.use.https.backend>false</magento.use.https.backend> -->
 				
@@ -44,6 +44,8 @@
 				<!-- integration tests -->
 				<skipTests>false</skipTests>
 				<ignoreValidate>false</ignoreValidate>
+				<!-- browser profile for selenium -->
+				<selenium.browser>*firefox</selenium.browser>
 			</properties>
 		</profile>
 
@@ -162,7 +164,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<php.maven.version>2.0.0-RC1</php.maven.version>
-		<php.mavento.version>0.9.8</php.mavento.version>
+		<php.mavento.version>0.9.8.1</php.mavento.version>
 		<php.phpunit.version>3.6.10</php.phpunit.version>
 	</properties>
 
@@ -243,6 +245,14 @@
 			<type>phar</type>
 			<scope>test</scope>
 		</dependency>
+		<!-- phpunit selenium extension -->
+		<dependency>
+			<groupId>de.phpunit</groupId>
+			<artifactId>PHPUnit_Selenium</artifactId>
+			<type>phar</type>
+			<version>1.2.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- build lifecycle -->
@@ -252,12 +262,29 @@
 				<groupId>de.bbe-consulting.maven.plugin</groupId>
 				<artifactId>magento-maven-plugin</artifactId>
 				<version>${php.mavento.version}</version>
+				<configuration>
+					<!-- manual symlink configuration -->
+					<!-- <symLinks>
+						<symLink>app/design/adminhtml/default/default/template/${magentoModuleNameLowerCase}</symLink>
+						<symLink>app/locale/en_US/${magentoNameSpace}_${magentoModuleName}.csv</symLink>
+						<symLink>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}</symLink>
+						<symLink>app/etc/modules/${magentoNameSpace}_${magentoModuleName}.xml</symLink>
+						<symLink>app/design/adminhtml/default/default/layout/${magentoModuleNameLowerCase}.xml</symLink>
+					</symLinks>  -->
+				</configuration>
 				<executions>
 					<execution>
 						<id>setup-magento-test</id>
 						<phase>process-test-resources</phase>
 						<goals>
 							<goal>setup-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>pre-magento-test</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>pre-test</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -277,9 +304,30 @@
 					<excludeFromValidation>
 						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
 					</excludeFromValidation>
+					<!-- don't run selenium tests in test phase -->
+					<excludes>
+						<param>**/Selenium/**</param>
+					</excludes>
 					<!-- only run the unit suite class -->
 					<testPostfix>Tests</testPostfix>
 				</configuration>
+				<executions>
+					<execution>
+						<id>selenium-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<!-- overide excludes -->
+							<excludes><param>foobar</param></excludes>
+							<includes>
+								<param>**/Selenium/**</param>
+							</includes>
+							<testPostfix>Test</testPostfix>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -304,6 +352,24 @@
 					<dependenciesDir>${php.dependencies.target.dir}</dependenciesDir>
 					<testDependenciesDir>${php.dependencies.target.dir}</testDependenciesDir>
 				</configuration>
+			</plugin>
+
+			<!-- start selenium server -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>selenium-maven-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start-server</goal>
+						</goals>
+						<configuration>
+							<background>true</background>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- makes sure all source files have the same license, edit license.header to your needs -->
@@ -386,6 +452,19 @@
 		<!-- needed by sonar -->
 		<sourceDirectory>${basedir}/src/main/php</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/test/php</testSourceDirectory>
+		<!-- enable resource filtering -->
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<!-- site lifecycle -->

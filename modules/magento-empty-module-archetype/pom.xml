@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.bbe-consulting.maven.archetype</groupId>
 		<artifactId>magento-archetypes</artifactId>
-		<version>0.9.8</version>
+		<version>0.9.8.1</version>
 	</parent>
 
 	<groupId>de.bbe-consulting.maven.archetype</groupId>
@@ -14,13 +14,13 @@
 	<packaging>maven-archetype</packaging>
 
 	<name>Magento Empty Module Archetype</name>
-	<description>Barebone Magento module, only folder structure.</description>
+	<description>Empty Magento project.</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.bbe-consulting.maven.archetype</groupId>
 			<artifactId>magento-archetype-base</artifactId>
-			<version>0.9.8</version>
+			<version>${mavento.version}</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
@@ -44,7 +44,7 @@
 								<artifactItem>
 									<groupId>de.bbe-consulting.maven.archetype</groupId>
 									<artifactId>magento-archetype-base</artifactId>
-									<version>0.9.8</version>
+									<version>${mavento.version}</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<!-- <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory> -->

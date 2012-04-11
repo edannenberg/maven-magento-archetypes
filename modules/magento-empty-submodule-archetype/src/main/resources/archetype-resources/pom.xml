@@ -25,6 +25,16 @@
 			<plugin>
 				<groupId>de.bbe-consulting.maven.plugin</groupId>
 				<artifactId>magento-maven-plugin</artifactId>
+				<configuration>
+					<!-- manual symlink configuration -->
+					<!-- <symLinks>
+						<symLink>app/design/adminhtml/default/default/template/${magentoModuleNameLowerCase}</symLink>
+						<symLink>app/locale/en_US/${magentoNameSpace}_${magentoModuleName}.csv</symLink>
+						<symLink>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}</symLink>
+						<symLink>app/etc/modules/${magentoNameSpace}_${magentoModuleName}.xml</symLink>
+						<symLink>app/design/adminhtml/default/default/layout/${magentoModuleNameLowerCase}.xml</symLink>
+					</symLinks>  -->
+				</configuration>
 				<executions>
 					<execution>
 						<id>setup-magento-test</id>
@@ -34,10 +44,10 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>post-magento-test</id>
-						<phase>test</phase>
+						<id>pre-magento-test</id>
+						<phase>validate</phase>
 						<goals>
-							<goal>post-test</goal>
+							<goal>pre-test</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -56,9 +66,30 @@
 					<excludeFromValidation>
 						<param>app/code/${magentoModuleType}/${magentoNameSpace}/${magentoModuleName}/sql/${magentoModuleNameLowerCase}_setup/mysql4-install-*.php</param>
 					</excludeFromValidation>
+					<!-- don't run selenium tests in test phase -->
+					<excludes>
+						<param>**/Selenium/**</param>
+					</excludes>
 					<!-- only run the unit suite class -->
 					<testPostfix>Tests</testPostfix>
 				</configuration>
+				<executions>
+					<execution>
+						<id>sel-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<!-- overide excludes -->
+							<excludes><param>foobar</param></excludes>
+							<includes>
+								<param>**/Selenium/**</param>
+							</includes>
+							<testPostfix>Test</testPostfix>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -81,6 +112,23 @@
 					<dependenciesDir>${php.dependencies.target.dir}</dependenciesDir>
 					<testDependenciesDir>${php.dependencies.target.dir}</testDependenciesDir>
 				</configuration>
+			</plugin>
+
+			<!-- start selenium server -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>selenium-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start-server</goal>
+						</goals>
+						<configuration>
+							<background>true</background>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- makes sure all source files have the same license, edit license.header to your needs -->
@@ -166,6 +214,19 @@
 		<!-- needed by sonar -->
 		<sourceDirectory>${basedir}/src/main/php</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/test/php</testSourceDirectory>
+		<!-- enable resource filtering -->
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<reporting>

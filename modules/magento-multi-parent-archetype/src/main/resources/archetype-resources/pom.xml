@@ -31,13 +31,15 @@
 				<magento.db.name>magento_${artifactId}</magento.db.name>
 				<magento.db.user>root</magento.db.user>
 				<!-- <magento.db.passwd>123pw</magento.db.passwd> -->
+				
+				<!-- only needed if mysql does not run on standard port -->
 				<!-- <magento.db.host>127.0.0.1</magento.db.host> -->
 				<!-- <magento.db.port>3333</magento.db.port> -->
 
-				<!-- if your dev box does not support https -->
+				<!-- use https for backend/frontend? -->
 				<!-- <magento.use.https.frontend>false</magento.use.https.frontend> -->
 				<!-- <magento.use.https.backend>false</magento.use.https.backend> -->
-
+				
 				<magento.admin.username>admin</magento.admin.username>
 				<magento.admin.passwd>123test</magento.admin.passwd>
 
@@ -46,9 +48,11 @@
 
 				<!-- integration tests -->
 				<skipTests>false</skipTests>
+				<ignoreValidate>false</ignoreValidate>
 				<!-- always do a fresh setup for unit tests -->
 				<magento.test.instance.reuse>false</magento.test.instance.reuse>
-				<ignoreValidate>false</ignoreValidate>
+				<!-- browser profile for selenium -->
+				<selenium.browser>*firefox</selenium.browser>
 			</properties>
 		</profile>
 
@@ -167,7 +171,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<php.maven.version>2.0.0-RC1</php.maven.version>
-		<php.mavento.version>0.9.8</php.mavento.version>
+		<php.mavento.version>0.9.8.1</php.mavento.version>
 		<php.phpunit.version>3.6.10</php.phpunit.version>
 	</properties>
 
@@ -248,6 +252,14 @@
 			<type>phar</type>
 			<scope>test</scope>
 		</dependency>
+		<!-- phpunit selenium extension -->
+		<dependency>
+			<groupId>de.phpunit</groupId>
+			<artifactId>PHPUnit_Selenium</artifactId>
+			<type>phar</type>
+			<version>1.2.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- build lifecycle -->
@@ -299,6 +311,11 @@
 					<groupId>org.phpmaven</groupId>
 					<artifactId>maven-php-project</artifactId>
 					<version>${php.maven.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>selenium-maven-plugin</artifactId>
+					<version>2.2</version>
 				</plugin>
 				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>

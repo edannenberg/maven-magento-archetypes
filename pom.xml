@@ -5,13 +5,15 @@
 
 	<groupId>de.bbe-consulting.maven.archetype</groupId>
 	<artifactId>magento-archetype-parent</artifactId>
-	<version>0.9.8</version>
+	<version>0.9.8.1</version>
 	<packaging>pom</packaging>
 
 	<name>Magento Archetypes Parent Project</name>
 	<description>Holds Magento archetypes for the maven-magento-plugin</description>
 
 	<properties>
+		<mavento.version>${project.version}</mavento.version>
+		<mavento.sample.base.version>0.4.2</mavento.sample.base.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

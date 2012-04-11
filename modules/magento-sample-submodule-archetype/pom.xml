@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.bbe-consulting.maven.archetype</groupId>
 		<artifactId>magento-archetypes</artifactId>
-		<version>0.9.8</version>
+		<version>0.9.8.1</version>
 	</parent>
 
 	<groupId>de.bbe-consulting.maven.archetype</groupId>
@@ -14,19 +14,19 @@
 	<packaging>maven-archetype</packaging>
 
 	<name>Magento Sample SubModule Archetype</name>
-	<description>Ready-to-run Magento module with sample code. Only for multi module projects</description>
+	<description>Magento submodule project with sample code.</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.bbe-consulting.maven.archetype</groupId>
 			<artifactId>magento-archetype-base</artifactId>
-			<version>0.9.8</version>
+			<version>${mavento.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.bbe-consulting.maven.archetype</groupId>
 			<artifactId>magento-archetype-sample-base</artifactId>
-			<version>0.4.2</version>
+			<version>${mavento.sample.base.version}</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
@@ -50,7 +50,7 @@
 								<artifactItem>
 									<groupId>de.bbe-consulting.maven.archetype</groupId>
 									<artifactId>magento-archetype-base</artifactId>
-									<version>0.9.8</version>
+									<version>${mavento.version}</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<excludes>META-INF/maven/archetype-metadata.xml,archetype-resources/pom.xml,archetype-resources/license.header,archetype-resources/src/site/site.xml</excludes>
@@ -58,7 +58,7 @@
 								<artifactItem>
 									<groupId>de.bbe-consulting.maven.archetype</groupId>
 									<artifactId>magento-archetype-sample-base</artifactId>
-									<version>0.4.2</version>
+									<version>${mavento.sample.base.version}</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 								</artifactItem>

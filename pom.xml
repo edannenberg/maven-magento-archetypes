@@ -13,7 +13,7 @@
 
 	<properties>
 		<mavento.version>${project.version}</mavento.version>
-		<mavento.sample.base.version>0.4.2</mavento.sample.base.version>
+		<mavento.sample.base.version>0.4.3</mavento.sample.base.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

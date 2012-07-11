@@ -16,7 +16,7 @@
 	<!-- define the module, version and dependencies -->
 	<modules>
 		<${magentoNameSpace}_${magentoModuleName}>
-		<version>${version}</version>
+		<version>0.0.1</version>
 		<!-- <depends> <Mage_Adminhtml /> <${magentoNameSpace}_MyModul2 /> </depends> -->
 		</${magentoNameSpace}_${magentoModuleName}>
 	</modules>
